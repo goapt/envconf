@@ -1,0 +1,25 @@
+env = "local"
+# debug  off close, on open
+debug = "on"
+foo_env = ""
+time_after = 0.5
+
+[databases]
+
+  # You can indent as you please. Tabs or spaces. TOML don't care.
+  [databases.alpha]
+  host = ""
+  username = ""
+  password = ""
+  maxidle = 10
+
+  [databases.beta]
+  host = ""
+  username = ""
+  password = ""
+  maxidle = 10
+
+[log]
+    log_mode = "std"
+    log_level = "debug"
+    log_max_files = 15
