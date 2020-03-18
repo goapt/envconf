@@ -66,6 +66,7 @@ env文件遵循 [JSON-Path](https://github.com/pelletier/go-toml/tree/master/que
 
 3、载入配置文件，以及覆盖数据
 ```go
+import "github.com/goapt/envconf"
 
 type Database struct {
 	Host     string
@@ -88,13 +89,13 @@ type App struct {
 	Log       LogConf
 }
 
-conf, err := LoadFile("./testdata/app.toml")
+conf, err := envconf.LoadFile("./testdata/app.toml")
 
 if err != nil {
     return err
 }
 
-err = conf.Env("./testdata/.env.local")
+err = envconf.Env("./testdata/.env.local")
 
 if err != nil {
     return err
@@ -102,7 +103,7 @@ if err != nil {
 
 app := &App{}
 
-err = conf.Unmarshal(app)
+err = envconf.Unmarshal(app)
 if err != nil {
     return err
 }
