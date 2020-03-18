@@ -1,4 +1,4 @@
-# VConf 基于toml + env的golang配置库
+# EnvConf 基于toml + env的golang配置库
 <a href="https://github.com/goapt/envconf/actions"><img src="https://github.com/goapt/envconf/workflows/build/badge.svg" alt="Build Status"></a>
 
 为了解决配置集中化方案，基于toml格式和env配置自动替换的解决方案
