@@ -144,4 +144,4 @@ time_after = 0.125
 
 https://github.com/joho/godotenv
 
-github.com/spf13/viper
+https://github.com/spf13/viper
