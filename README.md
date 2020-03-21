@@ -1,10 +1,10 @@
-# EnvConf 基于toml + env的golang配置库
+# EnvConf 基于viper + env的golang配置库
 <a href="https://github.com/goapt/envconf/actions"><img src="https://github.com/goapt/envconf/workflows/build/badge.svg" alt="Build Status"></a>
 
-为了解决配置集中化方案，基于toml格式和env配置自动替换的解决方案
+为了解决配置集中化方案，基于viper格式和env配置自动替换的解决方案
 
 ## 理念
-在应用程序配置文件中，我们只需要使用toml写出一个配置文件骨架，里面不包含任何的敏感数据（如用户名和密码），然后在.env.local文件中写入敏感信息，程序启动的时候会自动将数据覆盖替换，如下
+在应用程序配置文件中，我们只需要使用toml或者yml,ini等viper支持的配置文件写出一个配置文件骨架，里面不包含任何的敏感数据（如用户名和密码），然后在.env.local文件中写入敏感信息，程序启动的时候会自动将数据覆盖替换，如下
 
 1、创建 app.toml 骨架配置文件
 ```toml
@@ -89,7 +89,7 @@ type App struct {
 	Log       LogConf
 }
 
-conf, err := envconf.LoadFile("./testdata/app.toml")
+conf, err := envconf.New("./testdata/app.toml")
 
 if err != nil {
     return err
@@ -143,3 +143,5 @@ time_after = 0.125
 ## Thanks
 
 https://github.com/joho/godotenv
+
+github.com/spf13/viper

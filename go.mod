@@ -4,5 +4,6 @@ go 1.12
 
 require (
 	github.com/goapt/dotenv v0.0.1
-	github.com/pelletier/go-toml v1.6.0
+	github.com/mitchellh/mapstructure v1.1.2
+	github.com/spf13/viper v1.6.2
 )

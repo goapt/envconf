@@ -1,11 +1,10 @@
 package envconf
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"testing"
-
-	"github.com/pelletier/go-toml"
 )
 
 type database struct {
@@ -30,7 +29,7 @@ type app struct {
 }
 
 func TestConf_Env(t *testing.T) {
-	conf, err := LoadFile("./testdata/app.toml")
+	conf, err := New("./testdata/app.toml")
 
 	if err != nil {
 		t.Fatal(err)
@@ -65,7 +64,7 @@ func TestConf_Env(t *testing.T) {
 		t.Fatal(errors.New(fmt.Sprintf("env parse error, must get %s but get %f", "0.125", app.TimeAfter)))
 	}
 
-	b, _ := toml.Marshal(app)
+	b, _ := json.Marshal(app)
 
 	t.Log(string(b))
 }
