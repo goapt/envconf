@@ -10,7 +10,7 @@ import (
 )
 
 type Conf struct {
-	config  *viper.Viper
+	*viper.Viper
 	TagName string
 }
 
@@ -34,7 +34,7 @@ func New(cf string, options ...ViperOption) (*Conf, error) {
 	}
 
 	return &Conf{
-		config:  conf,
+		Viper:   conf,
 		TagName: tagName,
 	}, nil
 }
@@ -48,14 +48,14 @@ func (v *Conf) Env(path string) error {
 	}
 
 	for k, val := range m {
-		if has := v.config.IsSet(k); has {
-			r, err := convert(v.config.Get(k), val)
+		if has := v.Viper.IsSet(k); has {
+			r, err := convert(v.Viper.Get(k), val)
 
 			if err != nil {
 				return err
 			}
 
-			v.config.Set(k, r)
+			v.Viper.Set(k, r)
 		}
 	}
 
@@ -64,7 +64,7 @@ func (v *Conf) Env(path string) error {
 
 // Unmarshal to struct
 func (v *Conf) Unmarshal(i interface{}) error {
-	return v.config.Unmarshal(i, func(config *mapstructure.DecoderConfig) {
+	return v.Viper.Unmarshal(i, func(config *mapstructure.DecoderConfig) {
 		config.TagName = v.TagName
 	})
 }
