@@ -1,0 +1,19 @@
+env: local
+debug: 'on'
+foo_env: ''
+time_after: 0.5
+databases:
+  alpha:
+    host: ''
+    username: ''
+    password: ''
+    maxidle: 10
+  beta:
+    host: ''
+    username: ''
+    password: ''
+    maxidle: 10
+log:
+  log_mode: std
+  log_level: debug
+  log_max_files: 15

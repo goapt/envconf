@@ -42,7 +42,6 @@ func New(cf string, options ...ViperOption) (*Conf, error) {
 // Env replace toml config items
 func (v *Conf) Env(path string) error {
 	m, err := dotenv.Read(path)
-
 	if err != nil {
 		return err
 	}
