@@ -103,7 +103,7 @@ if err != nil {
 
 app := &App{}
 
-err = envconf.Unmarshal(app)
+err = conf.Unmarshal(app)
 if err != nil {
     return err
 }
