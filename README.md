@@ -95,7 +95,7 @@ if err != nil {
     return err
 }
 
-err = envconf.Env("./testdata/.env.local")
+err = conf.Env("./testdata/.env.local")
 
 if err != nil {
     return err
