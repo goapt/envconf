@@ -95,7 +95,7 @@ if err != nil {
     return err
 }
 
-err = envconf.Env("./testdata/.env.local")
+err = conf.Env("./testdata/.env.local")
 
 if err != nil {
     return err
@@ -103,7 +103,7 @@ if err != nil {
 
 app := &App{}
 
-err = envconf.Unmarshal(app)
+err = conf.Unmarshal(app)
 if err != nil {
     return err
 }
