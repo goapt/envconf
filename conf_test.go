@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 	"testing"
 )
 
@@ -71,5 +72,53 @@ func TestConf_Env(t *testing.T) {
 
 		t.Log(string(b))
 	}
+}
 
+func TestConf_EnvWithReader(t *testing.T) {
+	files := []string{"./testdata/app.toml", "./testdata/app.yml"}
+
+	for _, file := range files {
+		conf, err := New(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		file, err := os.Open("./testdata/.env.local")
+		if err != nil {
+			return
+		}
+		defer file.Close()
+
+		err = conf.EnvWithReader(file)
+
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		app := &app{}
+
+		err = conf.Unmarshal(app)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if app.Databases["alpha"].Host != "127.0.0.1" {
+			t.Fatal(errors.New(fmt.Sprintf("env parse error, must get %s but get %s", "127.0.0.1", app.Databases["alpha"].Host)))
+		}
+
+		if app.Databases["beta"].Password != "123456" {
+			t.Fatal(errors.New(fmt.Sprintf("env parse error, must get %s but get %s", "123456", app.Databases["beta"].Password)))
+		}
+
+		if app.Databases["beta"].Maxidle != 100 {
+			t.Fatal(errors.New(fmt.Sprintf("env parse error, must get %d but get %d", 100, app.Databases["beta"].Maxidle)))
+		}
+
+		if app.TimeAfter != 0.125 {
+			t.Fatal(errors.New(fmt.Sprintf("env parse error, must get %s but get %f", "0.125", app.TimeAfter)))
+		}
+
+		b, _ := json.Marshal(app)
+
+		t.Log(string(b))
+	}
 }

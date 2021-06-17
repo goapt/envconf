@@ -1,6 +1,7 @@
 package envconf
 
 import (
+	"io"
 	"path/filepath"
 	"strconv"
 
@@ -46,6 +47,10 @@ func (v *Conf) Env(path string) error {
 		return err
 	}
 
+	return v.parse(m)
+}
+
+func (v *Conf) parse(m map[string]string) error {
 	for k, val := range m {
 		if has := v.Viper.IsSet(k); has {
 			r, err := convert(v.Viper.Get(k), val)
@@ -59,6 +64,16 @@ func (v *Conf) Env(path string) error {
 	}
 
 	return nil
+}
+
+// EnvWithReader replace config items form io.Reader
+func (v *Conf) EnvWithReader(r io.Reader) error {
+	m, err := dotenv.Parse(r)
+	if err != nil {
+		return err
+	}
+
+	return v.parse(m)
 }
 
 // Unmarshal to struct
