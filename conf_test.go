@@ -24,6 +24,7 @@ type logconf struct {
 type app struct {
 	Env       string
 	Debug     string
+	FooEnv    string  `toml:"foo_env" yml:"foo_env"`
 	TimeAfter float32 `toml:"time_after" yml:"time_after"`
 	Databases map[string]database
 	Log       logconf
@@ -32,6 +33,8 @@ type app struct {
 func TestConf_Env(t *testing.T) {
 
 	files := []string{"./testdata/app.toml", "./testdata/app.yml"}
+
+	_ = os.Setenv("FOO_ENV", "abc")
 
 	for _, file := range files {
 		conf, err := New(file)
@@ -66,6 +69,10 @@ func TestConf_Env(t *testing.T) {
 
 		if app.TimeAfter != 0.125 {
 			t.Fatal(errors.New(fmt.Sprintf("env parse error, must get %s but get %f", "0.125", app.TimeAfter)))
+		}
+
+		if app.FooEnv != "abc" {
+			t.Fatal(errors.New(fmt.Sprintf("env parse error, must get %s but get %s", "abc", app.FooEnv)))
 		}
 
 		b, _ := json.Marshal(app)
@@ -121,4 +128,8 @@ func TestConf_EnvWithReader(t *testing.T) {
 
 		t.Log(string(b))
 	}
+}
+
+func TestViper(t *testing.T) {
+	// viper.MergeConfig()
 }
